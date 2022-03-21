@@ -1,9 +1,11 @@
 package com.example.springboot.data.handler;
 
+import com.example.springboot.data.entity.ClimbingRoute;
 import com.example.springboot.data.entity.User;
 import com.example.springboot.data.model.CreateUserModel;
 import com.example.springboot.data.model.UserInfoModel;
 import com.example.springboot.data.model.UserInfoUpdateModel;
+import com.example.springboot.data.repository.ClimbingRouteRepository;
 import com.example.springboot.data.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,11 @@ public class UserHandler {
 
     private final UserRepository userRepository;
 
-    public UserHandler(UserRepository userRepository) {
+    private final ClimbingRouteRepository climbingRouteRepository;
+
+    public UserHandler(UserRepository userRepository, ClimbingRouteRepository climbingRouteRepository) {
         this.userRepository = userRepository;
+        this.climbingRouteRepository = climbingRouteRepository;
     }
 
 
@@ -44,6 +49,7 @@ public class UserHandler {
         userInfo.setRole(user.getRole());
         userInfo.setFullName(user.getFullName());
         userInfo.setInfo(user.getInfo());
+        userInfo.setRoutes(user.getMyRoutes());
 
         return userInfo;
     }
@@ -63,5 +69,24 @@ public class UserHandler {
         }
 
         return "Updated";
+    }
+
+    public String addRouteToUser(String username, Long routeId) {
+        ClimbingRoute route = climbingRouteRepository.findById(routeId).orElse(null);
+
+        if (route == null) {
+            return "Route doesn't exists";
+        }
+
+        try {
+            User user = userRepository.findUserByUsername(username);
+            user.addRoute(route);
+            userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while saving route";
+        }
+
+        return "Added";
     }
 }

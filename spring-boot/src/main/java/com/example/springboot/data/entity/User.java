@@ -39,6 +39,11 @@ public class User {
     @ManyToMany(mappedBy = "myGroupUsers")
     private Set<ClimbingEvent> myGroupEvents = new HashSet<>();
 
+//    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "user_route_climbed", joinColumns = @JoinColumn(name = "username"), inverseJoinColumns = @JoinColumn(name = "route_id"))
+    private Set<ClimbingRoute> myRoutes = new HashSet<>();
+
     public User() {
 
     }
@@ -48,6 +53,16 @@ public class User {
         this.password = password;
         this.role = role;
         this.fullName = fullName;
+    }
+
+    public void addRoute(ClimbingRoute route) {
+        myRoutes.add(route);
+        route.getUsers().add(this);
+    }
+
+    public void removeRoute(ClimbingRoute route) {
+        myRoutes.remove(route);
+        route.getUsers().remove(this);
     }
 
     public String getUsername() {
@@ -96,6 +111,22 @@ public class User {
 
     public void setMyEvents(Set<ClimbingEvent> myEvents) {
         this.myEvents = myEvents;
+    }
+
+    public Set<ClimbingEvent> getMyGroupEvents() {
+        return myGroupEvents;
+    }
+
+    public void setMyGroupEvents(Set<ClimbingEvent> myGroupEvents) {
+        this.myGroupEvents = myGroupEvents;
+    }
+
+    public Set<ClimbingRoute> getMyRoutes() {
+        return myRoutes;
+    }
+
+    public void setMyRoutes(Set<ClimbingRoute> myRoutes) {
+        this.myRoutes = myRoutes;
     }
 
     @Override

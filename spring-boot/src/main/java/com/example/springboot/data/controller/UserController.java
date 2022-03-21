@@ -33,4 +33,9 @@ public class UserController {
     public ResponseEntity<String> updateUserInfo(Authentication authentication, @RequestBody UserInfoUpdateModel updateModel) {
         return ResponseEntity.ok(userHandler.updateUserInfo(authentication.getName(), updateModel));
     }
+
+    @PostMapping("/user/route/{routeId}")
+    public ResponseEntity<String> addRouteForUser(Authentication authentication, @PathVariable("routeId") Long routeId) {
+        return ResponseEntity.ok(userHandler.addRouteToUser(authentication.getName(), routeId));
+    }
 }
