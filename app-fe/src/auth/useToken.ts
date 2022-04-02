@@ -7,7 +7,7 @@ const useToken = () => {
       tokenString === null || tokenString === undefined
         ? null
         : JSON.parse(tokenString);
-    console.log("HERE@", userToken);
+    // console.log("HERE@", userToken);
     return userToken;
   };
 

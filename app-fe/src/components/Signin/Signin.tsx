@@ -3,10 +3,12 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
 import "./Signin.css";
+import axios from "axios";
+import useAuth from "../../auth/useAuth";
 
 const Signin = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +16,9 @@ const Signin = () => {
   const [password2, setPassword2] = useState("");
 
   const toast = useRef(null);
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const showError = (message: string) => {
     // @ts-ignore: Object is possibly 'null'.
@@ -27,12 +32,40 @@ const Signin = () => {
 
   const onSubmitClick = () => {
     if (username.length === 0) showError("username is empty");
-    else if (false) showError("username already exists");
     else if (password1.length < 8)
       showError("password must be at least 8 char long");
     else if (password1 !== password2) showError("passwords don't match");
     else {
-      //TODO login and redirect
+      axios
+        .post("http://localhost:8080/users/user", {
+          username: username,
+          password: password1,
+        })
+        .then((res) => {
+          if (res.data === "Created") {
+            const token = {
+              username: username,
+              password: password1,
+              role: "user",
+            };
+            login(token).then(() => {
+              navigate("/");
+            });
+          } else if (res.data === "User already exists") {
+            showError("username already exists");
+            setPassword1("");
+            setPassword2("");
+          } else {
+            showError("Error has ocured");
+            setPassword1("");
+            setPassword2("");
+          }
+        })
+        .catch(() => {
+          showError("Error has ocured");
+          setPassword1("");
+          setPassword2("");
+        });
     }
   };
 

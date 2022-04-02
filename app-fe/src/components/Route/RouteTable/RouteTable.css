@@ -1,0 +1,9 @@
+.TableContainer {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  border: none !important;
+}

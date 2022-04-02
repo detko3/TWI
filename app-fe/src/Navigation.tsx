@@ -9,22 +9,47 @@ import {
   useLocation,
 } from "react-router-dom";
 import useAuth from "./auth/useAuth";
-import useToken from "./auth/useToken";
+import AreaDetail from "./components/Area/AreaDetail/AreaDetail";
+import AreaList from "./components/Area/AreaList/AreaList";
 import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
+import RouteDetail from "./components/Route/RouteDetail/RouteDetail";
 import Signin from "./components/Signin/Signin";
 
 const Navigation = () => {
-  // const { token, setToken } = useToken();
   return (
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
           <Route
-            path="about"
+            index
             element={
               <RequireAuth>
-                <About />
+                <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="areas"
+            element={
+              <RequireAuth>
+                <AreaList />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="areas/area/:id"
+            element={
+              <RequireAuth>
+                <AreaDetail />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="route/:id"
+            element={
+              <RequireAuth>
+                <RouteDetail />
               </RequireAuth>
             }
           />
@@ -36,8 +61,14 @@ const Navigation = () => {
               </RequireNoAuth>
             }
           />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} />
+          <Route
+            path="login"
+            element={
+              <RequireNoAuth>
+                <Login />
+              </RequireNoAuth>
+            }
+          />
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -65,25 +96,19 @@ function Layout() {
       {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
       <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/nothing-here">Nothing Here</Link>
-          </li>
-
-          <li>
-            <Link to="/login">Login page</Link>
-          </li>
-        </ul>
-        {authed && <button onClick={handleLogout}>Logout</button>}
+        {authed && (
+          <>
+            <ul>
+              <li>
+                <Link to="/">Profile</Link>
+              </li>
+              <li>
+                <Link to="/areas">Areas</Link>
+              </li>
+            </ul>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        )}
       </nav>
 
       <hr />
@@ -114,23 +139,7 @@ function RequireNoAuth({ children }: { children: React.ReactNode }) {
   return userToken === null || userToken === undefined ? (
     <>{children}</>
   ) : (
-    <Navigate to="/dashboard" replace />
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
+    <Navigate to="/" replace />
   );
 }
 

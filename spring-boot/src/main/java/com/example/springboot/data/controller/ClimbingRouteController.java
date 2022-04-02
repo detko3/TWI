@@ -3,14 +3,17 @@ package com.example.springboot.data.controller;
 import com.example.springboot.data.entity.ClimbingRoute;
 import com.example.springboot.data.handler.ClimbingRouteHandler;
 import com.example.springboot.data.model.ClimbingRouteModel;
+import com.example.springboot.data.model.UserInfoModel;
 import com.example.springboot.data.repository.ClimbingRouteRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping(path = "/climbing-routes")
 public class ClimbingRouteController {
@@ -35,5 +38,10 @@ public class ClimbingRouteController {
     @GetMapping("/climbing-route/{routeId}")
     public ResponseEntity<ClimbingRoute> getClimbingRoute(@PathVariable("routeId") Long routeId) {
         return ResponseEntity.ok(climbingRouteHandler.getClimbingRouteById(routeId));
+    }
+
+    @GetMapping("/climbing-route/{routeId}/users")
+    public ResponseEntity<List<UserInfoModel>> getUsersForRoute(@PathVariable("routeId") Long routeId) {
+        return ResponseEntity.ok(climbingRouteHandler.getUsersForRoute(routeId));
     }
 }

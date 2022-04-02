@@ -1,0 +1,18 @@
+.ProfileContainer {
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  background: gainsboro;
+}
+
+.SubContainer {
+  width: 80%;
+}
+
+.NameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+}

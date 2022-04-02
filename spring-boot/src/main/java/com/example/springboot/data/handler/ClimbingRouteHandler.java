@@ -2,12 +2,15 @@ package com.example.springboot.data.handler;
 
 import com.example.springboot.data.entity.ClimbingArea;
 import com.example.springboot.data.entity.ClimbingRoute;
+import com.example.springboot.data.entity.User;
 import com.example.springboot.data.model.ClimbingRouteModel;
+import com.example.springboot.data.model.UserInfoModel;
 import com.example.springboot.data.repository.ClimbingAreaRepository;
 import com.example.springboot.data.repository.ClimbingRouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -60,5 +63,25 @@ public class ClimbingRouteHandler {
         }
 
         return route;
+    }
+
+    public List<UserInfoModel> getUsersForRoute(Long routeId) {
+        ClimbingRoute route = climbingRouteRepository.findById(routeId).orElse(null);
+
+        if (route == null) {
+            throw new NullPointerException("Route wit id " + routeId + " doesn't exists");
+        }
+
+        Set<User> users = route.getUsers();
+        List<UserInfoModel> userModels = new ArrayList<>();
+        for (User user: users) {
+            UserInfoModel userM = new UserInfoModel();
+            userM.setUsername(user.getUsername());
+            userM.setRole(user.getRole());
+            userM.setFullName(user.getFullName());
+            userM.setInfo(user.getInfo());
+            userModels.add(userM);
+        }
+        return userModels;
     }
 }

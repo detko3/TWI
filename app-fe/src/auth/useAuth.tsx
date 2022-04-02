@@ -11,7 +11,7 @@ const authContext = createContext<AuthContextType>(null!);
 
 const useAuth = () => {
   const { token, setToken, removeToken } = useToken();
-  console.log("useAUTH:", token);
+  // console.log("useAUTH:", token);
   const [authed, setAuthed] = useState(token === null ? false : true);
   // console.log("AM I HERE");
 

@@ -1,0 +1,11 @@
+.RouteContainer {
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  background: gainsboro;
+}
+
+.SubContainer {
+  width: 80%;
+}
