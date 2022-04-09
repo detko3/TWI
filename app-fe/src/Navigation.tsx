@@ -11,6 +11,7 @@ import {
 import useAuth from "./auth/useAuth";
 import AreaDetail from "./components/Area/AreaDetail/AreaDetail";
 import AreaList from "./components/Area/AreaList/AreaList";
+import EventList from "./components/Event/EventList/EventList";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import RouteDetail from "./components/Route/RouteDetail/RouteDetail";
@@ -50,6 +51,14 @@ const Navigation = () => {
             element={
               <RequireAuth>
                 <RouteDetail />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="events"
+            element={
+              <RequireAuth>
+                <EventList />
               </RequireAuth>
             }
           />
@@ -105,6 +114,9 @@ function Layout() {
               <li>
                 <Link to="/areas">Areas</Link>
               </li>
+              <li>
+                <Link to="/events">Events</Link>
+              </li>
             </ul>
             <button onClick={handleLogout}>Logout</button>
           </>
@@ -140,14 +152,6 @@ function RequireNoAuth({ children }: { children: React.ReactNode }) {
     <>{children}</>
   ) : (
     <Navigate to="/" replace />
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
   );
 }
 

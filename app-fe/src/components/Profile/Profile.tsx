@@ -50,7 +50,7 @@ const Profile = () => {
         token.username + ":" + token.password
       ).toString("base64");
       axios
-        .get("http://localhost:8080/users/user/user-info", {
+        .get(`${process.env.REACT_APP_SERVER_URL}/users/user/user-info`, {
           withCredentials: false,
           headers: { Authorization: "Basic " + base64data },
         })
@@ -82,7 +82,7 @@ const Profile = () => {
       ).toString("base64");
       axios
         .put(
-          "http://localhost:8080/users/user/user-info",
+          `${process.env.REACT_APP_SERVER_URL}/users/user/user-info`,
           {
             fullName: modifyName,
             info: modifyInfo,

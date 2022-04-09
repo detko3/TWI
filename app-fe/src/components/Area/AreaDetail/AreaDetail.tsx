@@ -5,29 +5,37 @@ import getToken from "../../../data/getToken";
 import { Buffer } from "buffer";
 import "./AreaDetail.css";
 import RouteTable from "../../Route/RouteTable/RouteTable";
+import RouteDialog from "../../Route/RouteDialog/RouteDialog";
 
 const AreaDetail = () => {
   let { id } = useParams();
 
   const [area, setArea]: any = useState(null);
+  const token = getToken();
 
   useEffect(() => {
     loadArea();
   }, []);
 
+  const refreshData = () => {
+    loadArea();
+  };
+
   const loadArea = () => {
-    const token = getToken();
     if (token !== null && token !== undefined) {
       const base64data = Buffer.from(
         token.username + ":" + token.password
       ).toString("base64");
       axios
-        .get(`http://localhost:8080/climbing-areas/climbing-area/${id}`, {
-          withCredentials: false,
-          headers: { Authorization: "Basic " + base64data },
-        })
+        .get(
+          `${process.env.REACT_APP_SERVER_URL}/climbing-areas/climbing-area/${id}`,
+          {
+            withCredentials: false,
+            headers: { Authorization: "Basic " + base64data },
+          }
+        )
         .then((res) => {
-          console.log("DATA: ", res.data);
+          // console.log("DATA: ", res.data);
           setArea(res.data);
         })
         .catch((error) => {
@@ -48,6 +56,9 @@ const AreaDetail = () => {
         )}
         <h3>Routes:</h3>
         <RouteTable routes={area ? area.routes : []} />
+        {token.role === "admin" && (
+          <RouteDialog refresh={refreshData} areaId={Number(id)} />
+        )}
       </div>
     </div>
   );

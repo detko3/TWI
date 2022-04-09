@@ -89,4 +89,23 @@ public class UserHandler {
 
         return "Added";
     }
+
+    public String removeRouteFromUser(String username, Long routeId) {
+        ClimbingRoute route = climbingRouteRepository.findById(routeId).orElse(null);
+
+        if (route == null) {
+            return "Route doesn't exists";
+        }
+
+        try {
+            User user = userRepository.findUserByUsername(username);
+            user.removeRoute(route);
+            userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while deleting route";
+        }
+
+        return "Deleted";
+    }
 }

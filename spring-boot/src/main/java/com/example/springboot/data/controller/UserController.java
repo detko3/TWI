@@ -39,4 +39,9 @@ public class UserController {
     public ResponseEntity<String> addRouteForUser(Authentication authentication, @PathVariable("routeId") Long routeId) {
         return ResponseEntity.ok(userHandler.addRouteToUser(authentication.getName(), routeId));
     }
+
+    @DeleteMapping("/user/route/{routeId}")
+    public ResponseEntity<String> removeRouteForUser(Authentication authentication, @PathVariable("routeId") Long routeId) {
+        return ResponseEntity.ok(userHandler.removeRouteFromUser(authentication.getName(), routeId));
+    }
 }

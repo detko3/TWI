@@ -1,0 +1,10 @@
+.EventContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: gainsboro;
+}
+
+.SubContainer {
+  width: 80%;
+}

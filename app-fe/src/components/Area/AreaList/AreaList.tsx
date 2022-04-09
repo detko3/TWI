@@ -4,22 +4,27 @@ import getToken from "../../../data/getToken";
 import AreaTable from "../AreaTable/AreaTable";
 import "./AreaList.css";
 import { Buffer } from "buffer";
+import AreaDialog from "../AreaDialog/AreaDialog";
 
 const AreaList = () => {
   const [areas, setAreas] = useState([]);
+  const token = getToken();
 
   useEffect(() => {
     loadAreas();
   }, []);
 
+  const refreshData = () => {
+    loadAreas();
+  };
+
   const loadAreas = () => {
-    const token = getToken();
     if (token !== null && token !== undefined) {
       const base64data = Buffer.from(
         token.username + ":" + token.password
       ).toString("base64");
       axios
-        .get("http://localhost:8080/climbing-areas", {
+        .get(`${process.env.REACT_APP_SERVER_URL}/climbing-areas`, {
           withCredentials: false,
           headers: { Authorization: "Basic " + base64data },
         })
@@ -38,6 +43,7 @@ const AreaList = () => {
       <div className="SubContainer">
         <h2>Areas</h2>
         <AreaTable areas={areas} />
+        {token.role === "admin" && <AreaDialog refresh={refreshData} />}
       </div>
     </div>
   );

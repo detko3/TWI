@@ -37,7 +37,7 @@ const Signin = () => {
     else if (password1 !== password2) showError("passwords don't match");
     else {
       axios
-        .post("http://localhost:8080/users/user", {
+        .post(`${process.env.REACT_APP_SERVER_URL}/users/user`, {
           username: username,
           password: password1,
         })

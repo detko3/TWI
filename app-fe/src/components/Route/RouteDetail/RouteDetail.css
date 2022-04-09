@@ -9,3 +9,9 @@
 .SubContainer {
   width: 80%;
 }
+
+.NameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

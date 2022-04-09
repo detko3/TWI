@@ -56,7 +56,7 @@ const Login = () => {
         "base64"
       );
       axios
-        .get("http://localhost:8080/users/user/user-info", {
+        .get(`${process.env.REACT_APP_SERVER_URL}/users/user/user-info`, {
           withCredentials: false,
           headers: { Authorization: "Basic " + base64data },
         })
