@@ -78,12 +78,12 @@ public class ClimbingEvent {
 
     public void addGroupUser(User user) {
         myGroupUsers.add(user);
-        user.getMyEvents().add(this);
+        user.getMyGroupEvents().add(this);
     }
 
     public void removeGroupUser(User user) {
         myGroupUsers.remove(user);
-        user.getMyEvents().remove(this);
+        user.getMyGroupEvents().remove(this);
     }
 
     public Long getId() {

@@ -11,6 +11,7 @@ import {
 import useAuth from "./auth/useAuth";
 import AreaDetail from "./components/Area/AreaDetail/AreaDetail";
 import AreaList from "./components/Area/AreaList/AreaList";
+import EventDetail from "./components/Event/EventDetail/EventDetail";
 import EventList from "./components/Event/EventList/EventList";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
@@ -59,6 +60,14 @@ const Navigation = () => {
             element={
               <RequireAuth>
                 <EventList />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="event/:id"
+            element={
+              <RequireAuth>
+                <EventDetail />
               </RequireAuth>
             }
           />

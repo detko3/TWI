@@ -1,0 +1,28 @@
+.p-inputtext {
+  width: 100%;
+  height: 40px;
+}
+
+.p-dropdown {
+  width: 100%;
+  height: 40px;
+}
+
+.p-calendar {
+  width: 100%;
+  height: 40px;
+}
+
+.p-inputnumber {
+  width: 100%;
+  height: 40px;
+}
+
+.p-inputtextarea {
+  width: 100%;
+  min-height: 120px;
+}
+
+.headers {
+  font-size: 18px;
+}

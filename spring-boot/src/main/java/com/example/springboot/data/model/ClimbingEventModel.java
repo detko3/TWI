@@ -1,5 +1,6 @@
 package com.example.springboot.data.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class ClimbingEventModel {
     private int maxParticipants;
     private LocalDate date;
     private LocalTime time;
+    @JsonProperty
     private boolean isPrivate;
     private String description;
 }

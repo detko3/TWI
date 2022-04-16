@@ -34,8 +34,8 @@ public class ClimbingEventHandler {
         if (inactive) {
             return climbingEventRepository.findAll();
         } else {
-            System.out.println(LocalDate.now());
-            System.out.println(LocalTime.now());
+//            System.out.println(LocalDate.now());
+//            System.out.println(LocalTime.now());
 //            return climbingEventRepository.findClimbingEventsByDateGreaterThanEqualAndTimeGreaterThanEqual(LocalDate.now(), LocalTime.now());
             return climbingEventRepository.findClimbingEventsByDateGreaterThanEqual(LocalDate.now());
         }
@@ -47,6 +47,8 @@ public class ClimbingEventHandler {
             if (climbingArea == null) {
                 return "Climbing area doesn't exists";
             }
+
+            System.out.println(model.isPrivate());
 
             ClimbingEvent climbingEvent = new ClimbingEvent(model.getArea(), model.getMinGrade(), model.getMaxGrade(),
                     model.getMaxParticipants(), username, model.getDate(), model.getTime(), model.isPrivate(), model.getDescription());
@@ -94,5 +96,14 @@ public class ClimbingEventHandler {
         event.addGroupUser(user);
         climbingEventRepository.save(event);
         return "Added";
+    }
+
+    public ClimbingEvent getEventById(Long eventId) {
+        ClimbingEvent event = climbingEventRepository.findById(eventId).orElse(null);
+
+        if (event == null) {
+            throw new NullPointerException("Event with id " + eventId + "  doesn't exists");
+        }
+        return event;
     }
 }

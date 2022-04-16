@@ -56,4 +56,9 @@ public class ClimbingEventController {
     public ResponseEntity<List<EventComment>> getCommentsForEvent(@PathVariable("eventId") Long eventId) {
         return ResponseEntity.ok(eventCommentHandler.getCommentsForEvent(eventId));
     }
+
+    @GetMapping("climbing-event/{eventId}")
+    public ResponseEntity<ClimbingEvent> getEventById(@PathVariable("eventId") Long eventId) {
+        return ResponseEntity.ok(climbingEventHandler.getEventById(eventId));
+    }
 }

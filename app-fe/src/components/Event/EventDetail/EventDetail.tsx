@@ -1,41 +1,35 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import getToken from "../../../data/getToken";
-import EventView from "../EventView/EventView";
 import { Buffer } from "buffer";
-import "./EventList.css";
-import EventDialog from "../EventDialog/EventDialog";
+import "./EventDetail.css";
 
-const EventList = () => {
-  const [events, setEvents] = useState([]);
-  const [inactive, setInactive] = useState(false);
+const EventDetail = () => {
+  let { id } = useParams();
+  const [event, setEvent] = useState(null);
   const token = getToken();
 
   useEffect(() => {
-    loadEvents();
+    loadEvent();
   }, []);
 
-  const refreshData = () => {
-    loadEvents();
-  };
-
-  const loadEvents = () => {
+  const loadEvent = () => {
     if (token !== null && token !== undefined) {
       const base64data = Buffer.from(
         token.username + ":" + token.password
       ).toString("base64");
       axios
         .get(
-          `${process.env.REACT_APP_SERVER_URL}/climbing-events/${inactive}`,
+          `${process.env.REACT_APP_SERVER_URL}/climbing-events/climbing-event/${id}`,
           {
             withCredentials: false,
             headers: { Authorization: "Basic " + base64data },
           }
         )
         .then((res) => {
-          console.log("Events: ", res.data);
-          setEvents(res.data);
-          // console.log(climbed);
+          console.log("Event: ", res.data);
+          setEvent(res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -46,12 +40,15 @@ const EventList = () => {
   return (
     <div className="EventContainer">
       <div className="SubContainer">
-        <h2>Events</h2>
-        <EventView events={events} token={token} />
-        <EventDialog refresh={refreshData} />
+        <div className="EventHeader"></div>
+        <div className="EventBody">
+          <div className="EventBodyLeft"></div>
+          <div className="EventBodyRight"></div>
+        </div>
+        <p>Event {id}</p>
       </div>
     </div>
   );
 };
 
-export default EventList;
+export default EventDetail;

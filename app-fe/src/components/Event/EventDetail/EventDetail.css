@@ -1,7 +1,6 @@
-.AreaContainer {
+.EventContainer {
   width: 100%;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   background: gainsboro;
 }
@@ -9,4 +8,8 @@
 .SubContainer {
   width: 80%;
   margin-bottom: 50px;
+}
+
+.EventBodyLeft {
+  background-color: red;
 }
