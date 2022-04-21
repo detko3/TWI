@@ -2,6 +2,10 @@
   background: none !important;
 }
 
+.Filters {
+  display: flex;
+}
+
 .ItemContainer {
   display: flex;
   max-height: 160px;

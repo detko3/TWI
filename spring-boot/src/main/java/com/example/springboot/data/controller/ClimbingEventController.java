@@ -8,6 +8,10 @@ import com.example.springboot.data.model.ClimbingEventModel;
 import com.example.springboot.data.model.EventCommentModel;
 import com.example.springboot.data.model.UserInfoModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +26,12 @@ public class ClimbingEventController {
 
     private EventCommentHandler eventCommentHandler;
 
-    public ClimbingEventController(ClimbingEventHandler climbingEventHandler, EventCommentHandler eventCommentHandler) {
+    private SimpMessagingTemplate template;
+
+    public ClimbingEventController(ClimbingEventHandler climbingEventHandler, EventCommentHandler eventCommentHandler, SimpMessagingTemplate template) {
         this.climbingEventHandler = climbingEventHandler;
         this.eventCommentHandler = eventCommentHandler;
+        this.template = template;
     }
 
     @GetMapping("/{inactive}")
@@ -39,8 +46,16 @@ public class ClimbingEventController {
 
     @PostMapping("/climbing-event/comment")
     public ResponseEntity<String> createComment(Authentication authentication, @RequestBody EventCommentModel eventCommentModel) {
-        return ResponseEntity.ok(eventCommentHandler.createComment(authentication.getName(), eventCommentModel));
+        String result = eventCommentHandler.createComment(authentication.getName(), eventCommentModel);
+        return ResponseEntity.ok(result);
     }
+
+    @MessageMapping("/sendMessage")
+    @SendTo("/topic/public")
+    public String sendMessage(@Payload String chatMessage) {
+        return chatMessage;
+    }
+
 
     @GetMapping("/climbing-event/{eventId}/users")
     public ResponseEntity<List<UserInfoModel>> getUsersForEvent(@PathVariable("eventId") Long eventId) {

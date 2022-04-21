@@ -13,7 +13,7 @@ const EventList = () => {
 
   useEffect(() => {
     loadEvents();
-  }, []);
+  }, [inactive]);
 
   const refreshData = () => {
     loadEvents();
@@ -43,11 +43,19 @@ const EventList = () => {
     }
   };
 
+  const onActiveChange = (value: boolean) => {
+    setInactive(value);
+  };
+
   return (
     <div className="EventContainer">
       <div className="SubContainer">
         <h2>Events</h2>
-        <EventView events={events} token={token} />
+        <EventView
+          events={events}
+          token={token}
+          onActiveChange={onActiveChange}
+        />
         <EventDialog refresh={refreshData} />
       </div>
     </div>

@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/users/user").permitAll()
+                .antMatchers("/ws-message").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

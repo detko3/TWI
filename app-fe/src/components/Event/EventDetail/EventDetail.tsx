@@ -4,14 +4,18 @@ import { useParams } from "react-router-dom";
 import getToken from "../../../data/getToken";
 import { Buffer } from "buffer";
 import "./EventDetail.css";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import CommentsContainer from "../../Comment/CommentsContainer/CommentsContainer";
 
 const EventDetail = () => {
   let { id } = useParams();
-  const [event, setEvent] = useState(null);
+  const [event, setEvent] = useState<any>(null);
   const token = getToken();
 
   useEffect(() => {
     loadEvent();
+    console.log("Event!!!: ", event);
   }, []);
 
   const loadEvent = () => {
@@ -37,15 +41,68 @@ const EventDetail = () => {
     }
   };
 
+  const onSelect = (data: any) => {
+    //navigate to user profile not yet implemented
+  };
+
   return (
     <div className="EventContainer">
-      <div className="SubContainer">
-        <div className="EventHeader"></div>
-        <div className="EventBody">
-          <div className="EventBodyLeft"></div>
-          <div className="EventBodyRight"></div>
+      <div className="EventSubContainer">
+        <div className="EventHeader">
+          <div className="EventHeaderLeft">
+            {event && (
+              <>
+                <h2>{event.createdBy}</h2>
+                <p>area: {event.area}</p>
+                <p>
+                  grade:{" "}
+                  {event.minGrade === null || event.minGrade === 0
+                    ? 1
+                    : event.minGrade}
+                  -
+                  {event.maxGrade === null || event.maxGrade === 0
+                    ? 27
+                    : event.maxGrade}
+                </p>
+                <p>
+                  {event.date} {event.time}
+                </p>
+              </>
+            )}
+          </div>
+          <div className="EventHeaderRight">
+            <h2>Info:</h2>
+            {event && (
+              <p>
+                {event.description === null
+                  ? "No description provided"
+                  : event.description}
+              </p>
+            )}
+          </div>
         </div>
-        <p>Event {id}</p>
+        <div className="EventBody">
+          <div className="EventBodyLeft">
+            <h2 style={{ marginTop: "10px", textAlign: "center" }}>
+              Users:{" "}
+              {event
+                ? `${event.myGroupUsers.length}/${event.maxParticipants}`
+                : ""}{" "}
+            </h2>
+            {event && (
+              <DataTable
+                value={event.myGroupUsers}
+                selectionMode="single"
+                onRowSelect={(e) => onSelect(e.data)}
+              >
+                <Column field="fullName"></Column>
+              </DataTable>
+            )}
+          </div>
+          <div className="EventBodyRight">
+            <CommentsContainer id={id} />
+          </div>
+        </div>
       </div>
     </div>
   );
