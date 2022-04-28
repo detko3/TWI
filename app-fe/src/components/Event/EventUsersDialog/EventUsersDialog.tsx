@@ -2,10 +2,12 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./EventUsersDialog.css";
 
 const EventUsersDialog = ({ users, isPrivate }: any) => {
   const [display, setDisplay] = useState(false);
+  const navigate = useNavigate();
 
   const onDisplay = () => {
     if (!isPrivate) setDisplay(true);
@@ -17,6 +19,7 @@ const EventUsersDialog = ({ users, isPrivate }: any) => {
 
   const onSelect = (item: any) => {
     //navigate to user profile note yet implemented
+    navigate(`/user/${item.username}`);
   };
 
   return (

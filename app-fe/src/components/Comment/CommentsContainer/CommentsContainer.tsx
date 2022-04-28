@@ -104,13 +104,16 @@ const CommentsContainer = ({ id }: any) => {
       console.log("open");
     };
 
-    stompClient.connect({}, function (frame: any) {
-      console.log("Connected: " + frame);
-      stompClient.subscribe("/topic/public", function (greeting: any) {
-        console.log(greeting);
-        loadComments();
-      });
-    });
+    stompClient.connect(
+      { username: token.username, password: token.password },
+      function (frame: any) {
+        console.log("Connected: " + frame);
+        stompClient.subscribe("/topic/public", function (greeting: any) {
+          console.log(greeting);
+          loadComments();
+        });
+      }
+    );
 
     ws.onclose = () => {
       console.log("close");

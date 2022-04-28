@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getToken from "../../../data/getToken";
 import { Buffer } from "buffer";
 import "./EventDetail.css";
@@ -10,12 +10,14 @@ import CommentsContainer from "../../Comment/CommentsContainer/CommentsContainer
 
 const EventDetail = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
+
   const [event, setEvent] = useState<any>(null);
   const token = getToken();
 
   useEffect(() => {
     loadEvent();
-    console.log("Event!!!: ", event);
+    // console.log("Event!!!: ", event);
   }, []);
 
   const loadEvent = () => {
@@ -43,6 +45,7 @@ const EventDetail = () => {
 
   const onSelect = (data: any) => {
     //navigate to user profile not yet implemented
+    navigate(`/user/${data.username}`);
   };
 
   return (

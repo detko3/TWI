@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import * as React from "react";
 import {
   Routes,
@@ -14,9 +15,12 @@ import AreaList from "./components/Area/AreaList/AreaList";
 import EventDetail from "./components/Event/EventDetail/EventDetail";
 import EventList from "./components/Event/EventList/EventList";
 import Login from "./components/Login/Login";
+import OtherProfile from "./components/Profile/OtherProfile";
 import Profile from "./components/Profile/Profile";
 import RouteDetail from "./components/Route/RouteDetail/RouteDetail";
 import Signin from "./components/Signin/Signin";
+import UserSearch from "./components/User/UserSearch/UserSearch";
+import "./Navigation.css";
 
 const Navigation = () => {
   return (
@@ -28,6 +32,22 @@ const Navigation = () => {
             element={
               <RequireAuth>
                 <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="user/:userId"
+            element={
+              <RequireAuth>
+                <OtherProfile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <RequireAuth>
+                <UserSearch />
               </RequireAuth>
             }
           />
@@ -113,21 +133,37 @@ function Layout() {
     <div className="Container">
       {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
-      <nav>
+      <nav className="NavigationContainer">
         {authed && (
           <>
-            <ul>
-              <li>
-                <Link to="/">Profile</Link>
+            <ul className="UlContainer">
+              <li className="liCont">
+                <Link className="LiLink" to="/">
+                  Profile
+                </Link>
               </li>
-              <li>
-                <Link to="/areas">Areas</Link>
+              <li className="liCont">
+                <Link className="LiLink" to="/areas">
+                  Areas
+                </Link>
               </li>
-              <li>
-                <Link to="/events">Events</Link>
+              <li className="liCont">
+                <Link className="LiLink" to="/events">
+                  Events
+                </Link>
+              </li>
+              <li className="liCont">
+                <Link className="LiLink" to="/users">
+                  Users
+                </Link>
               </li>
             </ul>
-            <button onClick={handleLogout}>Logout</button>
+            <Button
+              onClick={handleLogout}
+              style={{ height: "30px", marginRight: "30px" }}
+            >
+              Logout
+            </Button>
           </>
         )}
       </nav>

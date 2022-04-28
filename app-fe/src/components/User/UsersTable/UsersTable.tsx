@@ -10,6 +10,7 @@ const UsersTable = ({ users }: any) => {
 
   const onSelect = (data: any) => {
     //navigate to user Profile
+    navigate(`/user/${data.username}`);
   };
   return (
     <div className="TableContainer">

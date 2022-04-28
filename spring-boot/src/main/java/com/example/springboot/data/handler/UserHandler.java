@@ -9,6 +9,9 @@ import com.example.springboot.data.repository.ClimbingRouteRepository;
 import com.example.springboot.data.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserHandler {
 
@@ -43,6 +46,8 @@ public class UserHandler {
 
     public UserInfoModel getUserInfo(String username) {
         User user = userRepository.findUserByUsername(username);
+
+        if (user == null) return null;
 
         UserInfoModel userInfo = new UserInfoModel();
         userInfo.setUsername(user.getUsername());
@@ -107,5 +112,20 @@ public class UserHandler {
         }
 
         return "Deleted";
+    }
+
+    public List<UserInfoModel> searchUsers(String filter) {
+        List<User> users = userRepository.findAllByFullNameIgnoreCaseLike("%" + filter + "%");
+
+        List<UserInfoModel> userInfos = new ArrayList<>();
+        for (User user: users) {
+            UserInfoModel userInfo = new UserInfoModel();
+            userInfo.setUsername(user.getUsername());
+            userInfo.setRole(user.getRole());
+            userInfo.setFullName(user.getFullName());
+            userInfo.setInfo(user.getInfo());
+            userInfos.add(userInfo);
+        }
+        return userInfos;
     }
 }

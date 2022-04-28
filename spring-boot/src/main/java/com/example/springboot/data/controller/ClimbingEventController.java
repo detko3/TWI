@@ -50,11 +50,6 @@ public class ClimbingEventController {
         return ResponseEntity.ok(result);
     }
 
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic/public")
-    public String sendMessage(@Payload String chatMessage) {
-        return chatMessage;
-    }
 
 
     @GetMapping("/climbing-event/{eventId}/users")

@@ -1,0 +1,17 @@
+.UserItem {
+  width: 100%;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 25px;
+  padding: 15px;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.SearchUserItemInfo {
+  margin-left: 25px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-right: 10px;
+}
