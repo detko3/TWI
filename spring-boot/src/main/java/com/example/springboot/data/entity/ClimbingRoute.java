@@ -24,14 +24,16 @@ public class ClimbingRoute {
     @Column(name = "grade", nullable = false)
     private int grade;
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "username")
+    private User createdBy;
 
 //    @JsonIgnore
 //    @ManyToOne
 //    @NotFound(action = NotFoundAction.IGNORE)
-    @Column(name="area_id", nullable=false)
-    private Long areaId;
+    @OneToOne
+    @JoinColumn(name="area_id", referencedColumnName = "id")
+    private ClimbingArea areaId;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "myRoutes")
@@ -42,7 +44,7 @@ public class ClimbingRoute {
 
     }
 
-    public ClimbingRoute(String name, int grade, String createdBy, Long areaId) {
+    public ClimbingRoute(String name, int grade, User createdBy, ClimbingArea areaId) {
         this.name = name;
         this.grade = grade;
         this.createdBy = createdBy;
@@ -75,26 +77,26 @@ public class ClimbingRoute {
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy.getFullName();
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Long getArea() {
-        return areaId;
+//    public Long getArea() {
+//        return areaId;
+//    }
+
+//    public void setArea(Long area) {
+//        this.areaId = area;
+//    }
+
+    public String getAreaId() {
+        return areaId.getName();
     }
 
-    public void setArea(Long area) {
-        this.areaId = area;
-    }
-
-    public Long getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(Long areaId) {
+    public void setAreaId(ClimbingArea areaId) {
         this.areaId = areaId;
     }
 

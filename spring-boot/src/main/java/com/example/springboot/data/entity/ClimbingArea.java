@@ -28,8 +28,9 @@ public class ClimbingArea {
     @Column(name = "longitude", nullable = false)
     private Double longitude;
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "username")
+    private User createdBy;
 
 //    @JsonIgnore
     @OneToMany
@@ -46,7 +47,7 @@ public class ClimbingArea {
 
     }
 
-    public ClimbingArea(String name, Double latitude, Double longitude, String createdBy) {
+    public ClimbingArea(String name, Double latitude, Double longitude, User createdBy) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -87,10 +88,10 @@ public class ClimbingArea {
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy.getFullName();
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 

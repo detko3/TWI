@@ -48,12 +48,11 @@ public class ClimbingEventHandler {
                 return "Climbing area doesn't exists";
             }
 
-            System.out.println(model.isPrivate());
-
-            ClimbingEvent climbingEvent = new ClimbingEvent(model.getArea(), model.getMinGrade(), model.getMaxGrade(),
-                    model.getMaxParticipants(), username, model.getDate(), model.getTime(), model.isPrivate(), model.getDescription());
-
+//            System.out.println(model.isPrivate());
             User user = userRepository.findUserByUsername(username);
+
+            ClimbingEvent climbingEvent = new ClimbingEvent(climbingArea, model.getMinGrade(), model.getMaxGrade(),
+                    model.getMaxParticipants(), user, model.getDate(), model.getTime(), model.isPrivate(), model.getDescription());
 
             climbingEvent.addGroupUser(user);
 

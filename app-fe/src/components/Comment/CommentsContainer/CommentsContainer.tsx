@@ -13,7 +13,7 @@ import SockJS from "sockjs-client";
 // @ts-ignore
 import Stomp from "stompjs";
 
-const SOCKET_URL = "http://localhost:8080/ws-message";
+const SOCKET_URL = `${process.env.REACT_APP_SERVER_URL}/ws-message`;
 
 const CommentsContainer = ({ id }: any) => {
   const [comment, setComment] = useState("");

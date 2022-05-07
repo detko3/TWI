@@ -25,6 +25,8 @@ const RouteDialog = ({ refresh, areaId }: routeDialogProp) => {
 
   const onHide = () => {
     setDisplay(false);
+    setName("");
+    setGrade(null);
   };
 
   const onSave = () => {
@@ -62,6 +64,8 @@ const RouteDialog = ({ refresh, areaId }: routeDialogProp) => {
             setGrade(null);
             refresh();
             setDisplay(false);
+          } else if (res.data === "Climbing route already exists in area") {
+            showError("Route already exists");
           } else {
             showError("Error occured");
           }

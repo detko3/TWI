@@ -52,6 +52,7 @@ const AreaDetail = () => {
             <h2>{area.name}</h2>
             <h4>Latitude: {area.latitude}</h4>
             <h4>Longitude: {area.longitude}</h4>
+            <h4>Created by: {area.createdBy}</h4>
           </>
         )}
         <h3>Routes:</h3>

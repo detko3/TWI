@@ -19,8 +19,9 @@ public class ClimbingEvent {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "area", nullable = false)
-    private Long area;
+    @OneToOne
+    @JoinColumn(name = "area", referencedColumnName = "id")
+    private ClimbingArea area;
 
     @Column(name = "min_grade")
     private int minGrade;
@@ -31,8 +32,9 @@ public class ClimbingEvent {
     @Column(name = "max_participants")
     private Integer maxParticipants;
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "username")
+    private User createdBy;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -63,7 +65,7 @@ public class ClimbingEvent {
 
     }
 
-    public ClimbingEvent(Long area, int minGrade, int maxGrade, int maxParticipants, String createdBy, LocalDate date, LocalTime time, boolean isPrivate, String description) {
+    public ClimbingEvent(ClimbingArea area, int minGrade, int maxGrade, int maxParticipants, User createdBy, LocalDate date, LocalTime time, boolean isPrivate, String description) {
         this.area = area;
         this.minGrade = minGrade;
         this.maxGrade = maxGrade;
@@ -94,19 +96,19 @@ public class ClimbingEvent {
         this.id = id;
     }
 
-    public Long getArea() {
-        return area;
+    public String getArea() {
+        return area.getName();
     }
 
-    public void setArea(Long area) {
+    public void setArea(ClimbingArea area) {
         this.area = area;
     }
 
     public String getCreatedBy() {
-        return createdBy;
+        return createdBy.getFullName();
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
